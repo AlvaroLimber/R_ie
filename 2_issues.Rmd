@@ -1,0 +1,15 @@
+# Temas básicos en la evaluación
+
+## Tipos de estudios
+
+## Tipos de variables
+
+## Coberturas estadísticas
+
+## Unidades de análisis
+
+## Estadística básica 
+
+## Inferencia descriptiva
+
+## Inferencia causal

@@ -1,0 +1,12 @@
+# Diseños cuasi experimentales: Diferencia en diferencia
+
+## De manera Intuitiva
+## Algo de historia
+## De manera formal
+## Replicando un caso de estudio externo: Estudio X
+## Estudio de caso Bolivia: Programa X
+## Validez del diseño
+## Muestra y poder
+## En R
+## Creando funciones
+## Empleando la librería 
