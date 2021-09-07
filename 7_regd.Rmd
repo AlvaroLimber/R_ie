@@ -1,4 +1,4 @@
-# Diseños experimentales: Aleatorización
+# Diseños cuasi experimentales: Regresión Discontinua
 
 ## De manera Intuitiva
 ## Algo de historia

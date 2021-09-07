@@ -3,7 +3,7 @@
     "path": "~/Documents/GitHub/R_ie/1_problema.Rmd",
     "project_path": "1_problema.Rmd",
     "type": "r_markdown",
-    "hash": "1420406040",
+    "hash": "4070803101",
     "contents": "",
     "dirty": false,
     "created": 1630021653016.0,
@@ -13,15 +13,15 @@
         "tempName": "Untitled1",
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "1,0",
-        "scrollLine": "0"
+        "cursorPosition": "34,85",
+        "scrollLine": "30"
     },
     "folds": "",
-    "lastKnownWriteTime": 1630021734,
+    "lastKnownWriteTime": 1630984353,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1630021734647,
+    "last_content_update": 1630984353222,
     "read_only": false,
     "read_only_alternatives": []
 }
