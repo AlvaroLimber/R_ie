@@ -1,4 +1,3 @@
-prefacio-1
 el-problema-fundamental-de-la-evaluación-de-impacto
 la-ruta-de-la-causalidad
 tres-malos-ejemplos-de-métodos-evaluación
@@ -54,7 +53,7 @@ muestra-y-poder-2
 en-r-2
 creando-funciones-2
 empleando-la-librería-2
-diseños-experimentales-aleatorización-1
+diseños-cuasi-experimentales-regresión-discontinua
 de-manera-intuitiva-3
 algo-de-historia-3
 de-manera-formal-3
