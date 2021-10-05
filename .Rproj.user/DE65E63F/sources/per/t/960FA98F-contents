@@ -1,10 +1,92 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
 # Diseños experimentales: Aleatorización
 
 ## De manera Intuitiva
 ## Algo de historia
 ## De manera formal
-## Replicando un caso de estudio externo: Estudio X
+## Replicando un caso de estudio externo: Atención a Crisis, Nicaragua
+
+  + Tiempo 0: April–May 2005
+  + Tiempo 1: July–August 2006
+  + Tiempo 2: August 2008 and May 2009
+  
+Población: The Atención a Crisis pilot program was implemented between November 2005 and December 2006 by the Ministry of the Family in six municipalities in rural Nicaragua.
+
+Asignación: 56 intervention and 50 control communities were randomly selected through a lottery.
+
+```{r}
+rm(list = ls())
+library(haven)
+library(dplyr)
+library(texreg)
+bd<-read_dta("/Users/alvarolimber/Dropbox/iEvaluation_R/!library/cedlaBasico/Parte-Practica/Asignacion-Aleatoria/Macours-et-al.dta")
+
+bd<-bd %>% filter(is.na(unique_05)==F)
+bd %>% group_by(unique_05,T) %>% summarise(tx=n())
+```
+
+This process resulted in the identification
+of 3,002 households to participate in the program
+
+  + Basic
+  + Basic + training 
+  + Basic + grant
+  
+Households in Group 1 were offered a cash transfer, paid to the “titular” every
+two months. For households with children ages 0–5, this transfer was in principle
+conditional on regular preventive health check-ups. However, in practice, this conditionality
+was not monitored, and households were not penalized for noncompliance.
+Households with children between 7 and 15 years old who had not finished primary
+school received an additional educational transfer, conditional on the school enrollment
+and regular attendance of those children. The education conditionality was
+monitored in practice. The basic Atención a Crisis intervention was modeled after
+an earlier CCT program in Nicaragua, the Red de Protección Social (RPS).5 On
+average, transfers made to this group represented 15 percent of per capita expenditures
+of the average recipient household in our sample over the year in which it was
+implemented.6 We refer to this treatment as the basic treatment.
+Households in Group 2 received a cash transfer that was identical to that received
+by households in Group 1. In addition, they were offered a scholarship that allowed
+one of the household members to choose among a number of vocational training
+courses offered at the municipal headquarters. These household members also participated
+in labor market and business-skill training workshops organized in their
+own communities. We refer to this treatment as the training package.
+Households in Group 3 received a cash transfer that was identical to that received
+by households in Group 1. In addition, they were offered a lump-sum payment to
+start a small nonagricultural activity. This lump sum was conditional on the household
+developing a business development plan. It was paid out between the end of
+May and September 2006.7 The value of the lump-sum payment represented approximately
+11 percent of per capita expenditures of the average recipient household
+over the year in which it was implemented. A household in Group 3 therefore was
+eligible for transfers equivalent to approximately 26 percent of annual expenditures.
+We refer to this treatment as the lump-sum payment package.  
+
+```{r}
+library(miceadds)#lm.cluster
+library(sandwich)
+library(texreg)#extract
+bd %>% select(z_language_06,T)
+options(scipen=999)
+
+m0<-lm(z_language_06~T,data = bd)
+m1<-lm.cluster(z_language_06~T,data = bd,cluster = "unique_05")
+m2<-lm.cluster(z_language_08~T,data = bd,cluster = "unique_05")
+
+summary(m0)
+summary(m1)
+summary(m2)
+extract(m0)
+bdh<-bd %>% group_by(hogarid_old) %>% mutate(pp=1,pp=cumsum(pp)) %>% filter(pp==1)
+
+m4<-lm.cluster(scale(cons_tot_pc_08)~TREAT1+TREAT2+TREAT3,data = bdh,cluster = "unique_05")
+summary(m4)
+```
+
 ## Estudio de caso Bolivia: Programa X
+
 ## Validez del diseño
 ## Muestra y poder
 ## En R
