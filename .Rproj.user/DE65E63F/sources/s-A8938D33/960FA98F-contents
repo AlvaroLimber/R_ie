@@ -5,6 +5,10 @@ editor_options:
 ---
 # Diseños experimentales: Aleatorización
 
+  * Diseño de grupo de control pretest-postest
+  * Cuatro grupo de Salomon
+  * Diseño de grupo de control postest
+
 ## De manera Intuitiva
 ## Algo de historia
 ## De manera formal
@@ -89,6 +93,33 @@ summary(m4)
 
 ## Validez del diseño
 ## Muestra y poder
+
+$$H_0: \mu_T-\mu_C=0$$
+$$H_1: \mu_T-\mu_C\neq 0; \quad \mu_T-\mu_C= d$$
+
+  * Error de tipo I: $\alpha$, falso positivo, Rechazar algo verdadero (rechazar impacto dado que existe)
+  * Error de tipo II: $\beta$, falso negativo, Aceptar algo falso (declarar impacto cuando no existe)
+  
+| Realidad | ~R HO    | R H0    |
+|----------|----------|---------|
+| H0 V     | $1-\alpha$ | $\alpha$  |
+| H0 F     | $\beta$    | $1-\beta$ |  
+
+Tamaño del efecto (effect size) y el efecto mínimo detectable.
+
+$$\delta=\frac{\mu_T-\mu_C}{\sigma}$$
+
+$$n=\frac{\left(Z_{1-\alpha/2}+Z_\beta\right)^2}{\delta^2}$$
+```{r}
+library(CRTSize)#cluster
+library(pwr)#simple
+n4means(0.30,1,10,0.05)
+pwr.t.test(d=1/2,sig.level = 0.05,power = 0.9)
+```
+
 ## En R
+
+
+
 ## Creando funciones
 ## Empleando la librería 

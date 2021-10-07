@@ -4,6 +4,26 @@
 
 ![](https://blogsmedia.lse.ac.uk/blogs.dir/9/files/2019/02/DFIF-VfM.png)
 
+El objetivo central es comprender la relación causal entre:
+
+$$X\rightarrow Y $$
+
+$$y_i=\beta_0+\alpha T_i+\beta^* X^*_i+\epsilon_i$$  
+  
+  * Variables de resultado 
+  * Variables de control
+  * Variables de disturbio
+  * Ruido blanco
+
+Fuentes de invalidación
+
+  * Historia
+  * Maduración
+  * Administración de $T$
+  * Instrumentación
+  * Selección
+  * Mortalidad
+
 ## Tres malos ejemplos de métodos evaluación
 
 ![](https://bigdata-madesimple.com/wp-content/uploads/2016/05/correlation.png)
@@ -11,6 +31,10 @@
 ![](https://miro.medium.com/max/1400/1*NaXGm0CE6EVEa5FDWAZlDQ.png)
 
 ![](images/c1.jpg)
+
+  * Estudio de caso con una sola medición
+  * Diseño pretest-postest de un solo grupo
+  * Comparación con grupo estático
 
 ## El problema fundamental
 

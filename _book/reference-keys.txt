@@ -75,3 +75,4 @@ muestra-y-poder-4
 en-r-4
 creando-funciones-4
 empleando-la-librería-4
+replicando-un-caso-de-estudio-externo-atención-a-crisis-nicaragua
