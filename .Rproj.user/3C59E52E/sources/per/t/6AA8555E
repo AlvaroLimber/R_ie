@@ -1,0 +1,27 @@
+{
+    "id": "6AA8555E",
+    "path": "~/GitHub/R_ie/1_introR.Rmd",
+    "project_path": "1_introR.Rmd",
+    "type": "r_markdown",
+    "hash": "971737889",
+    "contents": "",
+    "dirty": false,
+    "created": 1642695370859.0,
+    "source_on_save": false,
+    "relative_order": 2,
+    "properties": {
+        "chunk_output_type": "console",
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "1230,0",
+        "scrollLine": "1222"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1642695412,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1642695412559,
+    "read_only": false,
+    "read_only_alternatives": []
+}
