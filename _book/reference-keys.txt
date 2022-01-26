@@ -36,3 +36,8 @@ flexdashboard
 shiny
 ui
 server
+algo-de-historia-de-r
+r-markdown-1
+slide-with-bullets
+slide-with-r-output
+slide-with-plot
