@@ -1,0 +1,36 @@
+---
+title: "Detallees de la Evaluación del Modulo 1"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Estructura de evaluación
+
+  + 30% Prueba de conocimientos teóricos estadísticos
+  + 30% Prueba de conocimientos aplicados en R
+  + 40% Proyecto de análisis de datos
+  
+# Pruebas de conocimiento 
+
+  - Ambas pruebas se enviaran el 2 de febrero
+  - El plazo de entrega es el 5 de febrero
+  - Los resultados de las pruebas serán publicadas hasta el 15 de febrero
+  
+# Proyecto de análisis de datos
+
+  - Consiste en un reporte de máximo 10 hojas
+  - El plazo de envío es el 10 de febrero
+  - Se debe elegir una base de datos de interés junto con una temática para hacer el reporte
+  - El trabajo debe realizarse en Rmarkdown
+  - El contenido mínimo del reporte es:
+    1. Motivación
+    2. Revisión de literatura (marco teórico)
+    3. Descripción de la fuente de información
+    4. Resultados (tablas, figuras, etc)
+    5. Análisis
+    6. Recomendaciones
+  - Se debe enviar el archivo .Rmd junto con los archivos auxiliares en un comprimido al correo achirino.stat@gmail.com
+    

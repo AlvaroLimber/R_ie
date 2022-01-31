@@ -1,0 +1,127 @@
+---
+title: "Clase 3: Estadística Descriptiva"
+author: "Alvaro Chirino"
+date: "1/28/2022"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,warning = F,message = F)
+```
+
+# Tipos 
+
+  * Estadística Descriptiva orientada a censos y registros. **Describir**
+  * Estadística Descriptiva inferencial (proviene de una muestra)
+
+# Flujo de trabajo en el análisis de datos
+
+  * Recolectar la información
+  * Importación de los datos y limpieza
+  * Conocer, describir los datos 
+  * Modelar los datos
+  * Comunicar 
+  
+# Importar bases de datos en R
+
+```{r}
+##CSV
+getwd()#directorio de trabajo actual
+setwd("C:\\Users\\ALVARO\\Documents\\GitHub\\R_ie\\data")
+setwd("~/GitHub/R_ie/data")
+bdr<-read.csv2("ranking.csv",encoding = "UTF-8")
+#sin cambiar el directorio de trabajo
+bdr2<-read.csv2("C:\\Users\\ALVARO\\Documents\\GitHub\\R_ie\\data\\ranking.csv")
+###SPSS
+library(haven)
+bdp<-read_sav("REG02 EPHC_T1-2021.SAV")
+```
+
+## Describir la base de datos
+
+```{r}
+dim(bdr)
+dim(bdp)
+names(bdr)
+
+bdr$anio
+t1<-table(bdr$anio)#contar los casos
+prop.table(t1)*100# %
+#gramática de datos 
+library(dplyr)
+# operador pipe %>% (ctr+shift+m) %>% 
+bdr %>% group_by(anio) %>% count() 
+t2<-bdr %>% group_by(anio,moneda) %>% count() 
+
+t3<-bdr %>% group_by(anio,nivel_entidad,moneda) %>% count() 
+
+str(bdr)#estructura de un base de datos
+```
+
+# Medidas estadísticas
+
+## Tendencia central (resumir la información)
+
+  - Media
+  
+$$\bar{x}=\frac{\sum_U x_i}{N}$$
+  
+  - Mediana
+  - Moda
+  
+```{r}
+mean(1:100)
+median(1:100)
+
+mean(bdr$monto_adjudicado)
+median(bdr$monto_adjudicado)
+
+bdr %>% group_by(anio,moneda) %>% summarise(Promedio=mean(monto_adjudicado)) 
+
+t4<-bdr %>% group_by(anio,moneda) %>% summarise(Promedio=mean(monto_adjudicado), Mediana=median(monto_adjudicado),Total=sum(monto_adjudicado))
+
+mean(bdr$monto_modificacion,na.rm =T )
+#exportar a excel
+#install.packages("writexl")
+library(writexl)
+write_xlsx(t4,"t4.xlsx")
+
+bdr %>% filter(moneda=="PYG") %>% group_by(anio) %>% summarise(Total=sum(monto_adjudicado)/1000000000)
+
+bdr %>% filter(moneda=="PYG" & anio>=2015 & nivel_entidad=="PODER EJECUTIVO") %>% group_by(anio) %>% summarise(Total=sum(monto_adjudicado)/1000000000)
+
+unique(bdr$nivel_entidad)
+
+bdr$nivel_entidad<-toupper(bdr$nivel_entidad)
+
+bdr<-bdr %>% mutate(nv_ent=tolower(nivel_entidad))
+
+```
+
+## Variabilidad
+
+  - Varianza
+  - Desviación estándar
+  - Rango
+  - Rango intercuartil
+
+```{r}
+var(bdr$monto_adjudicado)
+sd(bdr$monto_adjudicado)
+
+bd11<-bdr %>% filter(anio==2011 & moneda=="PYG")
+bd12<-bdr %>% filter(anio==2012 & moneda=="PYG")
+boxplot(log(bd11$monto_adjudicado))
+boxplot(log(bd12$monto_adjudicado))
+
+bd<-bind_rows(bd11,bd12)
+boxplot(log(bd$monto_adjudicado)~bd$anio)
+
+boxplot(log(bdr$monto_adjudicado)~bdr$anio+bdr$moneda)
+```
+
+## Forma
+
+
