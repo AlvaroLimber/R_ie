@@ -24,7 +24,7 @@
 <meta name="author" content="M.Sc. Álvaro Chirino Gutiérrez" />
 
 
-<meta name="date" content="2022-01-20" />
+<meta name="date" content="2022-02-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -212,6 +212,22 @@ div.csl-indent {
 <li class="chapter" data-level="1.16.2" data-path="introR.html"><a href="introR.html#server"><i class="fa fa-check"></i><b>1.16.2</b> Server</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="2" data-path="introducción-a-la-econometría-regresión.html"><a href="introducción-a-la-econometría-regresión.html"><i class="fa fa-check"></i><b>2</b> Introducción a la econometría (regresión)</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="introducción-a-la-econometría-regresión.html"><a href="introducción-a-la-econometría-regresión.html#regresión-lineal"><i class="fa fa-check"></i><b>2.1</b> Regresión lineal</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="introducción-a-la-econometría-regresión.html"><a href="introducción-a-la-econometría-regresión.html#paso-1-base-de-datos"><i class="fa fa-check"></i><b>2.1.1</b> Paso 1: Base de datos</a></li>
+<li class="chapter" data-level="2.1.2" data-path="introducción-a-la-econometría-regresión.html"><a href="introducción-a-la-econometría-regresión.html#paso-2-establecer-la-relación-de-interés."><i class="fa fa-check"></i><b>2.1.2</b> Paso 2: Establecer la relación de interés.</a></li>
+<li class="chapter" data-level="2.1.3" data-path="introducción-a-la-econometría-regresión.html"><a href="introducción-a-la-econometría-regresión.html#paso-3-definir-el-modelo-a-utilizar"><i class="fa fa-check"></i><b>2.1.3</b> Paso 3: Definir el modelo a utilizar</a></li>
+<li class="chapter" data-level="2.1.4" data-path="introducción-a-la-econometría-regresión.html"><a href="introducción-a-la-econometría-regresión.html#paso-4-optimizar-el-modelo"><i class="fa fa-check"></i><b>2.1.4</b> Paso 4: Optimizar el modelo</a></li>
+<li class="chapter" data-level="2.1.5" data-path="introducción-a-la-econometría-regresión.html"><a href="introducción-a-la-econometría-regresión.html#paso-5-validar-el-modelo"><i class="fa fa-check"></i><b>2.1.5</b> Paso 5: Validar el modelo</a></li>
+<li class="chapter" data-level="2.1.6" data-path="introducción-a-la-econometría-regresión.html"><a href="introducción-a-la-econometría-regresión.html#paso-6-predicir-a-partir-del-modelo"><i class="fa fa-check"></i><b>2.1.6</b> Paso 6: Predicir a partir del modelo</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="introducción-a-la-econometría-regresión.html"><a href="introducción-a-la-econometría-regresión.html#probit-y-logit"><i class="fa fa-check"></i><b>2.2</b> Probit y Logit</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="introducción-a-la-econometría-regresión.html"><a href="introducción-a-la-econometría-regresión.html#en-r"><i class="fa fa-check"></i><b>2.2.1</b> En R:</a></li>
+</ul></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -233,7 +249,7 @@ div.csl-indent {
 <h1 class="title">Evaluación de impacto en R</h1>
 <h2 class="subtitle"><em>Fundación Aru</em></h2>
 <p class="author"><em>M.Sc. Álvaro Chirino Gutiérrez</em></p>
-<p class="date"><em>2022-01-20</em></p>
+<p class="date"><em>2022-02-01</em></p>
 </div>
 <div id="prefacio" class="section level1 unnumbered">
 <h1>Prefacio</h1>
@@ -242,7 +258,7 @@ div.csl-indent {
 <div id="software-y-acuerdos" class="section level2 unnumbered">
 <h2>Software y acuerdos</h2>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="index.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div>
-<pre><code>## R version 4.1.1 (2021-08-10)
+<pre><code>## R version 4.1.2 (2021-11-01)
 ## Platform: x86_64-w64-mingw32/x64 (64-bit)
 ## Running under: Windows 10 x64 (build 19044)
 ## 
@@ -256,21 +272,33 @@ div.csl-indent {
 ## [5] LC_TIME=English_United States.1252    
 ## 
 ## attached base packages:
-## [1] stats     graphics  grDevices utils    
-## [5] datasets  methods   base     
+## [1] stats     graphics  grDevices
+## [4] utils     datasets  methods  
+## [7] base     
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] bookdown_0.24   digest_0.6.28  
-##  [3] R6_2.5.1        jsonlite_1.7.2 
-##  [5] magrittr_2.0.1  evaluate_0.14  
-##  [7] highr_0.9       stringi_1.7.5  
-##  [9] rlang_0.4.12    rstudioapi_0.13
-## [11] jquerylib_0.1.4 bslib_0.3.1    
-## [13] rmarkdown_2.11  tools_4.1.1    
-## [15] stringr_1.4.0   xfun_0.28      
-## [17] yaml_2.2.1      fastmap_1.1.0  
-## [19] compiler_4.1.1  htmltools_0.5.2
-## [21] knitr_1.36      sass_0.4.0</code></pre>
+##  [1] bookdown_0.24  
+##  [2] digest_0.6.29  
+##  [3] R6_2.5.1       
+##  [4] jsonlite_1.7.3 
+##  [5] magrittr_2.0.1 
+##  [6] evaluate_0.14  
+##  [7] highr_0.9      
+##  [8] stringi_1.7.5  
+##  [9] rlang_0.4.12   
+## [10] rstudioapi_0.13
+## [11] jquerylib_0.1.4
+## [12] bslib_0.3.1    
+## [13] rmarkdown_2.11 
+## [14] tools_4.1.2    
+## [15] stringr_1.4.0  
+## [16] xfun_0.28      
+## [17] yaml_2.2.2     
+## [18] fastmap_1.1.0  
+## [19] compiler_4.1.2 
+## [20] htmltools_0.5.2
+## [21] knitr_1.36     
+## [22] sass_0.4.0</code></pre>
 </div>
 <div id="bases-de-datos" class="section level2 unnumbered">
 <h2>Bases de datos</h2>

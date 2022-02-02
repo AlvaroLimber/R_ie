@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>2 Introducción a la econometría (regresión) | Evaluación de impacto en R</title>
+  <meta name="description" content="Este libro pretende ser una guía de inicio en la evaluación de impacto en el programa R, no busca ser un manual/recetario." />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="2 Introducción a la econometría (regresión) | Evaluación de impacto en R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Este libro pretende ser una guía de inicio en la evaluación de impacto en el programa R, no busca ser un manual/recetario." />
+  <meta name="github-repo" content="alvarolimber/R_ie" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="2 Introducción a la econometría (regresión) | Evaluación de impacto en R" />
+  
+  <meta name="twitter:description" content="Este libro pretende ser una guía de inicio en la evaluación de impacto en el programa R, no busca ser un manual/recetario." />
+  
+
+<meta name="author" content="M.Sc. Álvaro Chirino Gutiérrez" />
+
+
+<meta name="date" content="2022-02-01" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="introR.html"/>
+
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefacio</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#software-y-acuerdos"><i class="fa fa-check"></i>Software y acuerdos</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#bases-de-datos"><i class="fa fa-check"></i>Bases de datos</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="introR.html"><a href="introR.html"><i class="fa fa-check"></i><b>1</b> Introducción a R</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introR.html"><a href="introR.html#qué-es-r"><i class="fa fa-check"></i><b>1.1</b> ¿Qué es R?</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="introR.html"><a href="introR.html#acerca-de-r"><i class="fa fa-check"></i><b>1.1.1</b> Acerca de R</a></li>
+<li class="chapter" data-level="1.1.2" data-path="introR.html"><a href="introR.html#qué-es-r-1"><i class="fa fa-check"></i><b>1.1.2</b> ¿Qué es R?</a></li>
+<li class="chapter" data-level="1.1.3" data-path="introR.html"><a href="introR.html#algunas-referencias"><i class="fa fa-check"></i><b>1.1.3</b> Algunas referencias</a></li>
+<li class="chapter" data-level="1.1.4" data-path="introR.html"><a href="introR.html#rstudio"><i class="fa fa-check"></i><b>1.1.4</b> RStudio</a></li>
+<li class="chapter" data-level="1.1.5" data-path="introR.html"><a href="introR.html#instalación"><i class="fa fa-check"></i><b>1.1.5</b> Instalación</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="introR.html"><a href="introR.html#r-markdown"><i class="fa fa-check"></i><b>1.2</b> R Markdown</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="introR.html"><a href="introR.html#instalación-1"><i class="fa fa-check"></i><b>1.2.1</b> Instalación</a></li>
+<li class="chapter" data-level="1.2.2" data-path="introR.html"><a href="introR.html#yaml-header"><i class="fa fa-check"></i><b>1.2.2</b> YAML Header</a></li>
+<li class="chapter" data-level="1.2.3" data-path="introR.html"><a href="introR.html#sintaxis-básica"><i class="fa fa-check"></i><b>1.2.3</b> Sintaxis básica</a></li>
+<li class="chapter" data-level="1.2.4" data-path="introR.html"><a href="introR.html#tipos-de-documentos"><i class="fa fa-check"></i><b>1.2.4</b> Tipos de documentos</a></li>
+<li class="chapter" data-level="1.2.5" data-path="introR.html"><a href="introR.html#chunks"><i class="fa fa-check"></i><b>1.2.5</b> Chunks</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="introR.html"><a href="introR.html#r-básico"><i class="fa fa-check"></i><b>1.3</b> R básico</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="introR.html"><a href="introR.html#lógica-de-los-comandos-en-r"><i class="fa fa-check"></i><b>1.3.1</b> Lógica de los comandos en R</a></li>
+<li class="chapter" data-level="1.3.2" data-path="introR.html"><a href="introR.html#palabras-reservadas-y-simbolos-especiales-de-r"><i class="fa fa-check"></i><b>1.3.2</b> Palabras reservadas y simbolos especiales de R</a></li>
+<li class="chapter" data-level="1.3.3" data-path="introR.html"><a href="introR.html#símbolos-lógicos"><i class="fa fa-check"></i><b>1.3.3</b> Símbolos Lógicos</a></li>
+<li class="chapter" data-level="1.3.4" data-path="introR.html"><a href="introR.html#asignación-o-creación-de-objetos-estructuras-variables"><i class="fa fa-check"></i><b>1.3.4</b> Asignación o creación de objetos (estructuras, variables)</a></li>
+<li class="chapter" data-level="1.3.5" data-path="introR.html"><a href="introR.html#clases-en-r"><i class="fa fa-check"></i><b>1.3.5</b> Clases en R</a></li>
+<li class="chapter" data-level="1.3.6" data-path="introR.html"><a href="introR.html#algunas-comandos-adicionales"><i class="fa fa-check"></i><b>1.3.6</b> Algunas comandos adicionales</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="introR.html"><a href="introR.html#tipos-de-estructuras"><i class="fa fa-check"></i><b>1.4</b> Tipos de estructuras</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="introR.html"><a href="introR.html#homogéneas"><i class="fa fa-check"></i><b>1.4.1</b> Homogéneas</a></li>
+<li class="chapter" data-level="1.4.2" data-path="introR.html"><a href="introR.html#heterogéneas"><i class="fa fa-check"></i><b>1.4.2</b> Heterogéneas</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="introR.html"><a href="introR.html#indexación"><i class="fa fa-check"></i><b>1.5</b> Indexación</a></li>
+<li class="chapter" data-level="1.6" data-path="introR.html"><a href="introR.html#loops-y-condiciones"><i class="fa fa-check"></i><b>1.6</b> Loops y condiciones</a></li>
+<li class="chapter" data-level="1.7" data-path="introR.html"><a href="introR.html#crear-funciones-en-r."><i class="fa fa-check"></i><b>1.7</b> Crear funciones en R.</a></li>
+<li class="chapter" data-level="1.8" data-path="introR.html"><a href="introR.html#importación-de-datos"><i class="fa fa-check"></i><b>1.8</b> Importación de datos</a></li>
+<li class="chapter" data-level="1.9" data-path="introR.html"><a href="introR.html#exportar-la-base-de-datos"><i class="fa fa-check"></i><b>1.9</b> Exportar la base de datos</a></li>
+<li class="chapter" data-level="1.10" data-path="introR.html"><a href="introR.html#dataframe-y-exploración"><i class="fa fa-check"></i><b>1.10</b> Dataframe y exploración</a></li>
+<li class="chapter" data-level="1.11" data-path="introR.html"><a href="introR.html#estadística-descriptiva"><i class="fa fa-check"></i><b>1.11</b> Estadística descriptiva</a></li>
+<li class="chapter" data-level="1.12" data-path="introR.html"><a href="introR.html#inferencia-en-r"><i class="fa fa-check"></i><b>1.12</b> Inferencia en R</a></li>
+<li class="chapter" data-level="1.13" data-path="introR.html"><a href="introR.html#gráficos-de-origen"><i class="fa fa-check"></i><b>1.13</b> Gráficos de origen</a></li>
+<li class="chapter" data-level="1.14" data-path="introR.html"><a href="introR.html#ggplot"><i class="fa fa-check"></i><b>1.14</b> ggplot</a>
+<ul>
+<li class="chapter" data-level="1.14.1" data-path="introR.html"><a href="introR.html#datos-estetica-y-geometria-layers"><i class="fa fa-check"></i><b>1.14.1</b> Datos, estetica y geometria (layers)</a></li>
+</ul></li>
+<li class="chapter" data-level="1.15" data-path="introR.html"><a href="introR.html#flexdashboard"><i class="fa fa-check"></i><b>1.15</b> Flexdashboard</a></li>
+<li class="chapter" data-level="1.16" data-path="introR.html"><a href="introR.html#shiny"><i class="fa fa-check"></i><b>1.16</b> Shiny</a>
+<ul>
+<li class="chapter" data-level="1.16.1" data-path="introR.html"><a href="introR.html#ui"><i class="fa fa-check"></i><b>1.16.1</b> UI</a></li>
+<li class="chapter" data-level="1.16.2" data-path="introR.html"><a href="introR.html#server"><i class="fa fa-check"></i><b>1.16.2</b> Server</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introducción-a-la-econometría-regresión.html"><a href="introducción-a-la-econometría-regresión.html"><i class="fa fa-check"></i><b>2</b> Introducción a la econometría (regresión)</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="introducción-a-la-econometría-regresión.html"><a href="introducción-a-la-econometría-regresión.html#regresión-lineal"><i class="fa fa-check"></i><b>2.1</b> Regresión lineal</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="introducción-a-la-econometría-regresión.html"><a href="introducción-a-la-econometría-regresión.html#paso-1-base-de-datos"><i class="fa fa-check"></i><b>2.1.1</b> Paso 1: Base de datos</a></li>
+<li class="chapter" data-level="2.1.2" data-path="introducción-a-la-econometría-regresión.html"><a href="introducción-a-la-econometría-regresión.html#paso-2-establecer-la-relación-de-interés."><i class="fa fa-check"></i><b>2.1.2</b> Paso 2: Establecer la relación de interés.</a></li>
+<li class="chapter" data-level="2.1.3" data-path="introducción-a-la-econometría-regresión.html"><a href="introducción-a-la-econometría-regresión.html#paso-3-definir-el-modelo-a-utilizar"><i class="fa fa-check"></i><b>2.1.3</b> Paso 3: Definir el modelo a utilizar</a></li>
+<li class="chapter" data-level="2.1.4" data-path="introducción-a-la-econometría-regresión.html"><a href="introducción-a-la-econometría-regresión.html#paso-4-optimizar-el-modelo"><i class="fa fa-check"></i><b>2.1.4</b> Paso 4: Optimizar el modelo</a></li>
+<li class="chapter" data-level="2.1.5" data-path="introducción-a-la-econometría-regresión.html"><a href="introducción-a-la-econometría-regresión.html#paso-5-validar-el-modelo"><i class="fa fa-check"></i><b>2.1.5</b> Paso 5: Validar el modelo</a></li>
+<li class="chapter" data-level="2.1.6" data-path="introducción-a-la-econometría-regresión.html"><a href="introducción-a-la-econometría-regresión.html#paso-6-predicir-a-partir-del-modelo"><i class="fa fa-check"></i><b>2.1.6</b> Paso 6: Predicir a partir del modelo</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="introducción-a-la-econometría-regresión.html"><a href="introducción-a-la-econometría-regresión.html#probit-y-logit"><i class="fa fa-check"></i><b>2.2</b> Probit y Logit</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="introducción-a-la-econometría-regresión.html"><a href="introducción-a-la-econometría-regresión.html#en-r"><i class="fa fa-check"></i><b>2.2.1</b> En R:</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Evaluación de impacto en R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="introducción-a-la-econometría-regresión" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Introducción a la econometría (regresión)</h1>
+<p><span class="math display">\[y=f(x_1,x_2, \ldots)\]</span></p>
+<ul>
+<li><span class="math inline">\(y\)</span> Variable de resultado, dependiente, solo tenemos a una <span class="math inline">\(y\)</span>.</li>
+<li><span class="math inline">\(x_1, x_2, \ldots\)</span>, variables de control, independientes.</li>
+</ul>
+<p>A partir de estas variables:</p>
+<ul>
+<li>¿Cuál es la relación de <span class="math inline">\(x\)</span> sobre <span class="math inline">\(y\)</span>?
+<ul>
+<li>Lineal</li>
+</ul></li>
+</ul>
+<p><span class="math display">\[y_i=\beta_0+\beta_1 x_{i1}+\beta_2 x_{i2}+\ldots+\epsilon_i\]</span>
+<span class="math display">\[E[y_i]=E[\hat{\beta}_0+\hat{\beta}_1 x_{i1}+\hat{\beta}_2 x_{i2}+\ldots]\]</span></p>
+<p><span class="math display">\[\frac{dy}{d x_1}= \beta_1\]</span></p>
+<blockquote>
+<p>Nota: Diferenciar que la regresión busca establecer relaciones basadas en los datos y no asi un proceso causal.</p>
+</blockquote>
+<ul>
+<li><p>Polinomial</p></li>
+<li><p>Etc; No lineal,</p></li>
+<li><p>Conocer la naturaleza de <span class="math inline">\(y\)</span> y las variables <span class="math inline">\(x\)</span></p>
+<ul>
+<li><span class="math inline">\(Y\)</span> es cuanti (real), <span class="math inline">\(X\)</span> mixtas. (Modelos lineales, MCO)</li>
+<li><span class="math inline">\(Y\)</span> es cuanti (discreta &gt;= 0), <span class="math inline">\(X\)</span> cuanti. (Poisson)</li>
+<li><span class="math inline">\(Y\)</span> es cuali nominal binario, <span class="math inline">\(X\)</span> mixtas. (LOGIT/PROBIT)</li>
+<li><span class="math inline">\(Y\)</span> es cuali ordinal, <span class="math inline">\(X\)</span> mixtas. (Logit/probit ordenados)</li>
+</ul></li>
+</ul>
+<div id="regresión-lineal" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Regresión lineal</h2>
+<ol style="list-style-type: decimal">
+<li>Base datos lista para el modelo (Unidad de investigación)</li>
+<li>Establecer la relación interés</li>
+<li>Definir el modelo de interés</li>
+<li>Optimizar el modelo</li>
+<li>Validar el modelo</li>
+<li>Predecir a partir del modelo</li>
+</ol>
+<div id="paso-1-base-de-datos" class="section level3" number="2.1.1">
+<h3><span class="header-section-number">2.1.1</span> Paso 1: Base de datos</h3>
+</div>
+<div id="paso-2-establecer-la-relación-de-interés." class="section level3" number="2.1.2">
+<h3><span class="header-section-number">2.1.2</span> Paso 2: Establecer la relación de interés.</h3>
+<ul>
+<li><span class="math inline">\(Y\)</span></li>
+<li><span class="math inline">\(X\)</span></li>
+</ul>
+<p>Para definir el vector de covariables <span class="math inline">\(X\)</span>, una práctica recomendada es identificar variables desde el unidad de análisis hacia otras unidades agregadas.</p>
+</div>
+<div id="paso-3-definir-el-modelo-a-utilizar" class="section level3" number="2.1.3">
+<h3><span class="header-section-number">2.1.3</span> Paso 3: Definir el modelo a utilizar</h3>
+<p>OLS, MCO. Modelos lineales</p>
+<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="introducción-a-la-econometría-regresión.html#cb243-1" aria-hidden="true" tabindex="-1"></a><span class="co"># regresión lineal simple y=f(x)</span></span>
+<span id="cb243-2"><a href="introducción-a-la-econometría-regresión.html#cb243-2" aria-hidden="true" tabindex="-1"></a>m1_1<span class="ot">&lt;-</span><span class="fu">lm</span>()</span></code></pre></div>
+</div>
+<div id="paso-4-optimizar-el-modelo" class="section level3" number="2.1.4">
+<h3><span class="header-section-number">2.1.4</span> Paso 4: Optimizar el modelo</h3>
+<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="introducción-a-la-econometría-regresión.html#cb244-1" aria-hidden="true" tabindex="-1"></a><span class="co">#stepwise</span></span>
+<span id="cb244-2"><a href="introducción-a-la-econometría-regresión.html#cb244-2" aria-hidden="true" tabindex="-1"></a>m4_1<span class="ot">&lt;-</span><span class="fu">step</span>(m3_1)</span></code></pre></div>
+</div>
+<div id="paso-5-validar-el-modelo" class="section level3" number="2.1.5">
+<h3><span class="header-section-number">2.1.5</span> Paso 5: Validar el modelo</h3>
+<div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="introducción-a-la-econometría-regresión.html#cb245-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Supuestos del modelo</span></span>
+<span id="cb245-2"><a href="introducción-a-la-econometría-regresión.html#cb245-2" aria-hidden="true" tabindex="-1"></a><span class="do">## los errores se distribuyen normal(media=0,varianza=constante)</span></span>
+<span id="cb245-3"><a href="introducción-a-la-econometría-regresión.html#cb245-3" aria-hidden="true" tabindex="-1"></a><span class="do">### heterocedasticidad</span></span>
+<span id="cb245-4"><a href="introducción-a-la-econometría-regresión.html#cb245-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Independencia entre los X del modelo</span></span>
+<span id="cb245-5"><a href="introducción-a-la-econometría-regresión.html#cb245-5" aria-hidden="true" tabindex="-1"></a><span class="do">### multicolinealidad</span></span>
+<span id="cb245-6"><a href="introducción-a-la-econometría-regresión.html#cb245-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb245-7"><a href="introducción-a-la-econometría-regresión.html#cb245-7" aria-hidden="true" tabindex="-1"></a>model<span class="ot">&lt;-</span>m5_2</span>
+<span id="cb245-8"><a href="introducción-a-la-econometría-regresión.html#cb245-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb245-9"><a href="introducción-a-la-econometría-regresión.html#cb245-9" aria-hidden="true" tabindex="-1"></a><span class="co"># los errores se distribuyen normal</span></span>
+<span id="cb245-10"><a href="introducción-a-la-econometría-regresión.html#cb245-10" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb245-11"><a href="introducción-a-la-econometría-regresión.html#cb245-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model)</span>
+<span id="cb245-12"><a href="introducción-a-la-econometría-regresión.html#cb245-12" aria-hidden="true" tabindex="-1"></a><span class="fu">dev.off</span>()</span>
+<span id="cb245-13"><a href="introducción-a-la-econometría-regresión.html#cb245-13" aria-hidden="true" tabindex="-1"></a><span class="co">#errores</span></span>
+<span id="cb245-14"><a href="introducción-a-la-econometría-regresión.html#cb245-14" aria-hidden="true" tabindex="-1"></a>ee<span class="ot">&lt;-</span><span class="fu">residuals</span>(model)</span>
+<span id="cb245-15"><a href="introducción-a-la-econometría-regresión.html#cb245-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb245-16"><a href="introducción-a-la-econometría-regresión.html#cb245-16" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">density</span>(ee))</span>
+<span id="cb245-17"><a href="introducción-a-la-econometría-regresión.html#cb245-17" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="fu">density</span>(<span class="fu">rnorm</span>(<span class="dv">100000</span>,<span class="fu">mean</span>(ee),<span class="fu">sd</span>(ee))),<span class="at">type=</span><span class="st">&quot;l&quot;</span>,<span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span>
+<span id="cb245-18"><a href="introducción-a-la-econometría-regresión.html#cb245-18" aria-hidden="true" tabindex="-1"></a><span class="co">#prueba de normalidad</span></span>
+<span id="cb245-19"><a href="introducción-a-la-econometría-regresión.html#cb245-19" aria-hidden="true" tabindex="-1"></a><span class="co">#H0 x ~ normal()</span></span>
+<span id="cb245-20"><a href="introducción-a-la-econometría-regresión.html#cb245-20" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(normtest)</span>
+<span id="cb245-21"><a href="introducción-a-la-econometría-regresión.html#cb245-21" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nortest)</span>
+<span id="cb245-22"><a href="introducción-a-la-econometría-regresión.html#cb245-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb245-23"><a href="introducción-a-la-econometría-regresión.html#cb245-23" aria-hidden="true" tabindex="-1"></a><span class="fu">ad.test</span>(ee)</span>
+<span id="cb245-24"><a href="introducción-a-la-econometría-regresión.html#cb245-24" aria-hidden="true" tabindex="-1"></a><span class="fu">lillie.test</span>(ee)</span>
+<span id="cb245-25"><a href="introducción-a-la-econometría-regresión.html#cb245-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb245-26"><a href="introducción-a-la-econometría-regresión.html#cb245-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb245-27"><a href="introducción-a-la-econometría-regresión.html#cb245-27" aria-hidden="true" tabindex="-1"></a>bd2[<span class="dv">6697</span>,]</span>
+<span id="cb245-28"><a href="introducción-a-la-econometría-regresión.html#cb245-28" aria-hidden="true" tabindex="-1"></a>bd2[<span class="dv">7920</span>,]</span>
+<span id="cb245-29"><a href="introducción-a-la-econometría-regresión.html#cb245-29" aria-hidden="true" tabindex="-1"></a>bd2[<span class="dv">1280</span>,]</span>
+<span id="cb245-30"><a href="introducción-a-la-econometría-regresión.html#cb245-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb245-31"><a href="introducción-a-la-econometría-regresión.html#cb245-31" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(bd2<span class="sc">$</span>ylab)</span>
+<span id="cb245-32"><a href="introducción-a-la-econometría-regresión.html#cb245-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb245-33"><a href="introducción-a-la-econometría-regresión.html#cb245-33" aria-hidden="true" tabindex="-1"></a><span class="co">#limitar los datos hasta el percentil </span></span>
+<span id="cb245-34"><a href="introducción-a-la-econometría-regresión.html#cb245-34" aria-hidden="true" tabindex="-1"></a>punto<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="fl">0.05</span>,<span class="fl">0.95</span>)</span>
+<span id="cb245-35"><a href="introducción-a-la-econometría-regresión.html#cb245-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb245-36"><a href="introducción-a-la-econometría-regresión.html#cb245-36" aria-hidden="true" tabindex="-1"></a>z<span class="ot">&lt;-</span><span class="fu">quantile</span>(bd2<span class="sc">$</span>ylab,punto,<span class="at">na.rm=</span>T)</span>
+<span id="cb245-37"><a href="introducción-a-la-econometría-regresión.html#cb245-37" aria-hidden="true" tabindex="-1"></a>z</span>
+<span id="cb245-38"><a href="introducción-a-la-econometría-regresión.html#cb245-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb245-39"><a href="introducción-a-la-econometría-regresión.html#cb245-39" aria-hidden="true" tabindex="-1"></a>bd2<span class="ot">&lt;-</span>bd2 <span class="sc">%&gt;%</span> <span class="fu">filter</span>((ylab<span class="sc">&lt;</span>z[<span class="dv">2</span>] <span class="sc">&amp;</span> ylab<span class="sc">&gt;</span>z[<span class="dv">1</span>]))</span>
+<span id="cb245-40"><a href="introducción-a-la-econometría-regresión.html#cb245-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb245-41"><a href="introducción-a-la-econometría-regresión.html#cb245-41" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">density</span>(bd2<span class="sc">$</span>ylab))</span>
+<span id="cb245-42"><a href="introducción-a-la-econometría-regresión.html#cb245-42" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(bd2<span class="sc">$</span>ylab)</span>
+<span id="cb245-43"><a href="introducción-a-la-econometría-regresión.html#cb245-43" aria-hidden="true" tabindex="-1"></a><span class="co">#definiendo el modelo sin atípicos</span></span>
+<span id="cb245-44"><a href="introducción-a-la-econometría-regresión.html#cb245-44" aria-hidden="true" tabindex="-1"></a>model1<span class="ot">&lt;-</span><span class="fu">lm</span>(<span class="fu">log</span>(ylab)<span class="sc">~</span> <span class="fu">factor</span>(aestudio)<span class="sc">+</span>s02a_02<span class="sc">+</span>s02a_03<span class="sc">+</span>tothrs<span class="sc">+</span>area,<span class="at">data=</span>bd2)</span>
+<span id="cb245-45"><a href="introducción-a-la-econometría-regresión.html#cb245-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb245-46"><a href="introducción-a-la-econometría-regresión.html#cb245-46" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model1)</span>
+<span id="cb245-47"><a href="introducción-a-la-econometría-regresión.html#cb245-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb245-48"><a href="introducción-a-la-econometría-regresión.html#cb245-48" aria-hidden="true" tabindex="-1"></a>ee1<span class="ot">&lt;-</span><span class="fu">residuals</span>(model1)</span>
+<span id="cb245-49"><a href="introducción-a-la-econometría-regresión.html#cb245-49" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">density</span>(ee1))</span>
+<span id="cb245-50"><a href="introducción-a-la-econometría-regresión.html#cb245-50" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="fu">density</span>(<span class="fu">rnorm</span>(<span class="dv">100000</span>,<span class="fu">mean</span>(ee1),<span class="fu">sd</span>(ee1))),<span class="at">type=</span><span class="st">&quot;l&quot;</span>,<span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span>
+<span id="cb245-51"><a href="introducción-a-la-econometría-regresión.html#cb245-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb245-52"><a href="introducción-a-la-econometría-regresión.html#cb245-52" aria-hidden="true" tabindex="-1"></a><span class="fu">ad.test</span>(ee1)</span>
+<span id="cb245-53"><a href="introducción-a-la-econometría-regresión.html#cb245-53" aria-hidden="true" tabindex="-1"></a><span class="fu">lillie.test</span>(ee1)</span>
+<span id="cb245-54"><a href="introducción-a-la-econometría-regresión.html#cb245-54" aria-hidden="true" tabindex="-1"></a><span class="fu">ks.test</span>(ee1,<span class="st">&quot;pnorm&quot;</span>,<span class="fu">mean</span>(ee1),<span class="fu">sd</span>(ee1))<span class="co">#kolmogorov Smirnofv</span></span>
+<span id="cb245-55"><a href="introducción-a-la-econometría-regresión.html#cb245-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb245-56"><a href="introducción-a-la-econometría-regresión.html#cb245-56" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model1)</span>
+<span id="cb245-57"><a href="introducción-a-la-econometría-regresión.html#cb245-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb245-58"><a href="introducción-a-la-econometría-regresión.html#cb245-58" aria-hidden="true" tabindex="-1"></a><span class="co"># Distancia de Cook</span></span>
+<span id="cb245-59"><a href="introducción-a-la-econometría-regresión.html#cb245-59" aria-hidden="true" tabindex="-1"></a><span class="fu">cooks.distance</span>(model1)</span>
+<span id="cb245-60"><a href="introducción-a-la-econometría-regresión.html#cb245-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb245-61"><a href="introducción-a-la-econometría-regresión.html#cb245-61" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">density</span>(<span class="fu">cooks.distance</span>(model1)))</span>
+<span id="cb245-62"><a href="introducción-a-la-econometría-regresión.html#cb245-62" aria-hidden="true" tabindex="-1"></a>cc<span class="ot">&lt;-</span><span class="fu">cooks.distance</span>(model1)</span>
+<span id="cb245-63"><a href="introducción-a-la-econometría-regresión.html#cb245-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb245-64"><a href="introducción-a-la-econometría-regresión.html#cb245-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb245-65"><a href="introducción-a-la-econometría-regresión.html#cb245-65" aria-hidden="true" tabindex="-1"></a>bd3<span class="ot">&lt;-</span>bd2[cc<span class="sc">&lt;</span><span class="fu">quantile</span>(cc,<span class="fl">0.90</span>),]</span>
+<span id="cb245-66"><a href="introducción-a-la-econometría-regresión.html#cb245-66" aria-hidden="true" tabindex="-1"></a>model3<span class="ot">&lt;-</span><span class="fu">lm</span>(<span class="fu">log</span>(ylab)<span class="sc">~</span>s02a_03<span class="sc">+</span>aestudio<span class="sc">+</span>s02a_02<span class="sc">+</span>area,<span class="at">data=</span>bd3)</span>
+<span id="cb245-67"><a href="introducción-a-la-econometría-regresión.html#cb245-67" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model3)</span>
+<span id="cb245-68"><a href="introducción-a-la-econometría-regresión.html#cb245-68" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model3)</span>
+<span id="cb245-69"><a href="introducción-a-la-econometría-regresión.html#cb245-69" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">density</span>(<span class="fu">cooks.distance</span>(model3)))</span>
+<span id="cb245-70"><a href="introducción-a-la-econometría-regresión.html#cb245-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb245-71"><a href="introducción-a-la-econometría-regresión.html#cb245-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb245-72"><a href="introducción-a-la-econometría-regresión.html#cb245-72" aria-hidden="true" tabindex="-1"></a><span class="fu">ad.test</span>(<span class="fu">residuals</span>(model3))</span>
+<span id="cb245-73"><a href="introducción-a-la-econometría-regresión.html#cb245-73" aria-hidden="true" tabindex="-1"></a><span class="fu">lillie.test</span>(<span class="fu">residuals</span>(model3))</span>
+<span id="cb245-74"><a href="introducción-a-la-econometría-regresión.html#cb245-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb245-75"><a href="introducción-a-la-econometría-regresión.html#cb245-75" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">density</span>(<span class="fu">residuals</span>(model3)))</span>
+<span id="cb245-76"><a href="introducción-a-la-econometría-regresión.html#cb245-76" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dnorm</span>(x,<span class="fu">mean</span>(<span class="fu">residuals</span>(model3)),<span class="fu">sd</span>(<span class="fu">residuals</span>(model3))),<span class="at">add=</span>T,<span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span>
+<span id="cb245-77"><a href="introducción-a-la-econometría-regresión.html#cb245-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb245-78"><a href="introducción-a-la-econometría-regresión.html#cb245-78" aria-hidden="true" tabindex="-1"></a><span class="co">#ajustando polinomios</span></span>
+<span id="cb245-79"><a href="introducción-a-la-econometría-regresión.html#cb245-79" aria-hidden="true" tabindex="-1"></a>bd3<span class="ot">&lt;-</span><span class="fu">na.omit</span>(bd3)</span>
+<span id="cb245-80"><a href="introducción-a-la-econometría-regresión.html#cb245-80" aria-hidden="true" tabindex="-1"></a>model4<span class="ot">&lt;-</span><span class="fu">lm</span>(<span class="fu">log</span>(ylab)<span class="sc">~</span><span class="fu">poly</span>(s02a_03,<span class="dv">2</span>)<span class="sc">+</span><span class="fu">factor</span>(aestudio)<span class="sc">+</span>s02a_02<span class="sc">+</span><span class="fu">poly</span>(tothrs,<span class="dv">3</span>)<span class="sc">+</span>area,<span class="at">data=</span>bd3)</span>
+<span id="cb245-81"><a href="introducción-a-la-econometría-regresión.html#cb245-81" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model4)</span>
+<span id="cb245-82"><a href="introducción-a-la-econometría-regresión.html#cb245-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb245-83"><a href="introducción-a-la-econometría-regresión.html#cb245-83" aria-hidden="true" tabindex="-1"></a><span class="fu">ad.test</span>(<span class="fu">residuals</span>(model4))</span>
+<span id="cb245-84"><a href="introducción-a-la-econometría-regresión.html#cb245-84" aria-hidden="true" tabindex="-1"></a><span class="do">## interacciones entre variables</span></span>
+<span id="cb245-85"><a href="introducción-a-la-econometría-regresión.html#cb245-85" aria-hidden="true" tabindex="-1"></a>model5<span class="ot">&lt;-</span><span class="fu">lm</span>(<span class="fu">log</span>(ylab)<span class="sc">~</span><span class="fu">poly</span>(s02a_03,<span class="dv">2</span>)<span class="sc">+</span><span class="fu">factor</span>(aestudio)<span class="sc">+</span>s02a_02<span class="sc">+</span>area<span class="sc">+</span>s02a_02<span class="sc">:</span>aestudio<span class="sc">+</span>area<span class="sc">:</span>aestudio<span class="sc">+</span>tothrs<span class="sc">+</span><span class="fu">I</span>(tothrs<span class="sc">^</span><span class="dv">4</span>),<span class="at">data=</span>bd3)</span>
+<span id="cb245-86"><a href="introducción-a-la-econometría-regresión.html#cb245-86" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model5)</span>
+<span id="cb245-87"><a href="introducción-a-la-econometría-regresión.html#cb245-87" aria-hidden="true" tabindex="-1"></a><span class="fu">ad.test</span>(<span class="fu">residuals</span>(model5))</span>
+<span id="cb245-88"><a href="introducción-a-la-econometría-regresión.html#cb245-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb245-89"><a href="introducción-a-la-econometría-regresión.html#cb245-89" aria-hidden="true" tabindex="-1"></a><span class="co">#trabajando sobre los valores atípicos desde R</span></span>
+<span id="cb245-90"><a href="introducción-a-la-econometría-regresión.html#cb245-90" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb245-91"><a href="introducción-a-la-econometría-regresión.html#cb245-91" aria-hidden="true" tabindex="-1"></a>modela<span class="ot">&lt;-</span><span class="fu">rlm</span>(ylab<span class="sc">~</span>s02a_02<span class="sc">+</span>s02a_03<span class="sc">+</span>area,<span class="at">data=</span>bd3)</span>
+<span id="cb245-92"><a href="introducción-a-la-econometría-regresión.html#cb245-92" aria-hidden="true" tabindex="-1"></a>modelb<span class="ot">&lt;-</span><span class="fu">lm</span>(ylab<span class="sc">~</span>s02a_02<span class="sc">+</span>s02a_03<span class="sc">+</span>area,<span class="at">data=</span>bd3)</span>
+<span id="cb245-93"><a href="introducción-a-la-econometría-regresión.html#cb245-93" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modela)</span>
+<span id="cb245-94"><a href="introducción-a-la-econometría-regresión.html#cb245-94" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelb)</span>
+<span id="cb245-95"><a href="introducción-a-la-econometría-regresión.html#cb245-95" aria-hidden="true" tabindex="-1"></a><span class="fu">ad.test</span>(<span class="fu">residuals</span>(model))</span>
+<span id="cb245-96"><a href="introducción-a-la-econometría-regresión.html#cb245-96" aria-hidden="true" tabindex="-1"></a><span class="co"># Colinealidad (X1=f(X2)</span></span>
+<span id="cb245-97"><a href="introducción-a-la-econometría-regresión.html#cb245-97" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb245-98"><a href="introducción-a-la-econometría-regresión.html#cb245-98" aria-hidden="true" tabindex="-1"></a><span class="fu">vif</span>(model3)</span>
+<span id="cb245-99"><a href="introducción-a-la-econometría-regresión.html#cb245-99" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">vif</span>(model3))<span class="sc">&gt;</span><span class="dv">2</span> <span class="do">##Variance Inflation Factors</span></span>
+<span id="cb245-100"><a href="introducción-a-la-econometría-regresión.html#cb245-100" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar si la varianza es constante (homocedástico) o no (heterocedástico)</span></span>
+<span id="cb245-101"><a href="introducción-a-la-econometría-regresión.html#cb245-101" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmtest)</span>
+<span id="cb245-102"><a href="introducción-a-la-econometría-regresión.html#cb245-102" aria-hidden="true" tabindex="-1"></a><span class="fu">bptest</span>(model3) <span class="co"># H0: Homocedasticidad</span></span>
+<span id="cb245-103"><a href="introducción-a-la-econometría-regresión.html#cb245-103" aria-hidden="true" tabindex="-1"></a><span class="fu">bptest</span>(model4)</span>
+<span id="cb245-104"><a href="introducción-a-la-econometría-regresión.html#cb245-104" aria-hidden="true" tabindex="-1"></a><span class="co">#https://en.wikipedia.org/wiki/Breusch%E2%80%93Pagan_test</span></span>
+<span id="cb245-105"><a href="introducción-a-la-econometría-regresión.html#cb245-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb245-106"><a href="introducción-a-la-econometría-regresión.html#cb245-106" aria-hidden="true" tabindex="-1"></a><span class="co">#corrigiendo </span></span>
+<span id="cb245-107"><a href="introducción-a-la-econometría-regresión.html#cb245-107" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rms)</span>
+<span id="cb245-108"><a href="introducción-a-la-econometría-regresión.html#cb245-108" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">=</span> <span class="fu">ols</span>(<span class="fu">log</span>(ylab)<span class="sc">~</span>s02a_02<span class="sc">+</span>s02a_03<span class="sc">+</span>aestudio<span class="sc">+</span>area,<span class="at">data=</span>bd3,<span class="at">x=</span>T,<span class="at">y=</span>T)</span>
+<span id="cb245-109"><a href="introducción-a-la-econometría-regresión.html#cb245-109" aria-hidden="true" tabindex="-1"></a><span class="fu">bptest</span>(model1)</span>
+<span id="cb245-110"><a href="introducción-a-la-econometría-regresión.html#cb245-110" aria-hidden="true" tabindex="-1"></a>aux<span class="ot">&lt;-</span><span class="fu">robcov</span>(model1)</span>
+<span id="cb245-111"><a href="introducción-a-la-econometría-regresión.html#cb245-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb245-112"><a href="introducción-a-la-econometría-regresión.html#cb245-112" aria-hidden="true" tabindex="-1"></a>aux</span>
+<span id="cb245-113"><a href="introducción-a-la-econometría-regresión.html#cb245-113" aria-hidden="true" tabindex="-1"></a><span class="co"># H0: Homocedasticidad, implica que los EE de B no son los correctos</span></span></code></pre></div>
+</div>
+<div id="paso-6-predicir-a-partir-del-modelo" class="section level3" number="2.1.6">
+<h3><span class="header-section-number">2.1.6</span> Paso 6: Predicir a partir del modelo</h3>
+<p><span class="math display">\[\hat{y_i}=\hat{\beta_0}+\sum_{i=1}^p \hat{\beta_i} x_i\]</span></p>
+<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="introducción-a-la-econometría-regresión.html#cb246-1" aria-hidden="true" tabindex="-1"></a>test<span class="ot">&lt;-</span>bd3</span>
+<span id="cb246-2"><a href="introducción-a-la-econometría-regresión.html#cb246-2" aria-hidden="true" tabindex="-1"></a>yest<span class="ot">&lt;-</span><span class="fu">predict</span>(model3,test)</span>
+<span id="cb246-3"><a href="introducción-a-la-econometría-regresión.html#cb246-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">log</span>(bd3<span class="sc">$</span>ylab),yest)</span>
+<span id="cb246-4"><a href="introducción-a-la-econometría-regresión.html#cb246-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(bd3<span class="sc">$</span>ylab,<span class="fu">exp</span>(yest))</span></code></pre></div>
+<p>Nota:</p>
+<p><span class="math display">\[y=\beta_0+\beta_1x_1+\beta_2 x_2+\beta_3 x_1x_2 \]</span>
+<span class="math display">\[\frac{d y}{dx_1}=\beta_1+\beta_3 x_2\]</span></p>
+</div>
+</div>
+<div id="probit-y-logit" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Probit y Logit</h2>
+<p>Estrategia, llevar valores binarios a valores continuos. Mediante una función de enlace (<span class="math inline">\(F(Y)\)</span>).</p>
+<p><span class="math display">\[F(Y)=Y&#39;=X \beta +\epsilon\]</span></p>
+<p>Probit:</p>
+<p><span class="math display">\[Y=\Phi (X \beta +\epsilon)\]</span>
+<span class="math display">\[\phi^{-1}(Y)=X \beta +\epsilon\]</span>
+<span class="math display">\[Y&#39;=X \beta +\epsilon\]</span></p>
+<p>El enlace <span class="math inline">\(F(Y)=\Phi^{-1}(Y)\)</span>, es conocida como probit.</p>
+<p>Logit:</p>
+<p><span class="math display">\[logit(Y)=log(\frac{Y}{1-Y})=X\beta+\epsilon\]</span></p>
+<p><span class="math display">\[Y=\frac{e^{X\beta+\epsilon}}{1+e^{X\beta+\epsilon}}\]</span></p>
+<div id="en-r" class="section level3" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> En R:</h3>
+<p>Definir o plantear un modelo de relación <span class="math inline">\(y=f(x)\)</span> donde la variable <span class="math inline">\(y\)</span> sea de tipo binaria <span class="math inline">\((0,1)\)</span>.</p>
+<p><span class="math display">\[y_{pobreza}=f(x_1,x_2,\ldots)\]</span></p>
+<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="introducción-a-la-econometría-regresión.html#cb247-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb247-2"><a href="introducción-a-la-econometría-regresión.html#cb247-2" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;C:</span><span class="sc">\\</span><span class="st">Users</span><span class="sc">\\</span><span class="st">ALVARO</span><span class="sc">\\</span><span class="st">Documents</span><span class="sc">\\</span><span class="st">GitHub</span><span class="sc">\\</span><span class="st">EST-384</span><span class="sc">\\</span><span class="st">data</span><span class="sc">\\</span><span class="st">eh18.Rdata&quot;</span>)</span>
+<span id="cb247-3"><a href="introducción-a-la-econometría-regresión.html#cb247-3" aria-hidden="true" tabindex="-1"></a><span class="do">#### Pobreza a nivel de ... (hogares/persona)</span></span>
+<span id="cb247-4"><a href="introducción-a-la-econometría-regresión.html#cb247-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb247-5"><a href="introducción-a-la-econometría-regresión.html#cb247-5" aria-hidden="true" tabindex="-1"></a><span class="co">#definir a y (0/1)</span></span>
+<span id="cb247-6"><a href="introducción-a-la-econometría-regresión.html#cb247-6" aria-hidden="true" tabindex="-1"></a>eh18p<span class="ot">&lt;-</span>eh18p <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">pobreza=</span>(pext0<span class="sc">==</span><span class="st">&quot;Pobre extremo&quot;</span>))</span>
+<span id="cb247-7"><a href="introducción-a-la-econometría-regresión.html#cb247-7" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(eh18p<span class="sc">$</span>pobreza)</span>
+<span id="cb247-8"><a href="introducción-a-la-econometría-regresión.html#cb247-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb247-9"><a href="introducción-a-la-econometría-regresión.html#cb247-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb247-10"><a href="introducción-a-la-econometría-regresión.html#cb247-10" aria-hidden="true" tabindex="-1"></a>mod1<span class="ot">&lt;-</span><span class="fu">glm</span>(pobreza<span class="sc">~</span>aestudio<span class="sc">+</span>s02a_02,<span class="at">data=</span>eh18p,<span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link=</span><span class="st">&quot;probit&quot;</span>))</span>
+<span id="cb247-11"><a href="introducción-a-la-econometría-regresión.html#cb247-11" aria-hidden="true" tabindex="-1"></a>mod2<span class="ot">&lt;-</span><span class="fu">glm</span>(pobreza<span class="sc">~</span>aestudio<span class="sc">+</span>s02a_02,<span class="at">data=</span>eh18p,<span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link=</span><span class="st">&quot;logit&quot;</span>))</span>
+<span id="cb247-12"><a href="introducción-a-la-econometría-regresión.html#cb247-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb247-13"><a href="introducción-a-la-econometría-regresión.html#cb247-13" aria-hidden="true" tabindex="-1"></a>mod3<span class="ot">&lt;-</span><span class="fu">glm</span>(pobreza<span class="sc">~</span>aestudio<span class="sc">+</span>s02a_02<span class="sc">+</span>s02a_03<span class="sc">+</span>ylab,<span class="at">data=</span>eh18p,<span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link=</span><span class="st">&quot;logit&quot;</span>))</span>
+<span id="cb247-14"><a href="introducción-a-la-econometría-regresión.html#cb247-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb247-15"><a href="introducción-a-la-econometría-regresión.html#cb247-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb247-16"><a href="introducción-a-la-econometría-regresión.html#cb247-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb247-17"><a href="introducción-a-la-econometría-regresión.html#cb247-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb247-18"><a href="introducción-a-la-econometría-regresión.html#cb247-18" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod1)</span>
+<span id="cb247-19"><a href="introducción-a-la-econometría-regresión.html#cb247-19" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod2)</span>
+<span id="cb247-20"><a href="introducción-a-la-econometría-regresión.html#cb247-20" aria-hidden="true" tabindex="-1"></a><span class="co">#ajuste</span></span>
+<span id="cb247-21"><a href="introducción-a-la-econometría-regresión.html#cb247-21" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DescTools)</span>
+<span id="cb247-22"><a href="introducción-a-la-econometría-regresión.html#cb247-22" aria-hidden="true" tabindex="-1"></a><span class="fu">PseudoR2</span>(mod1)</span>
+<span id="cb247-23"><a href="introducción-a-la-econometría-regresión.html#cb247-23" aria-hidden="true" tabindex="-1"></a><span class="fu">PseudoR2</span>(mod2)</span>
+<span id="cb247-24"><a href="introducción-a-la-econometría-regresión.html#cb247-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb247-25"><a href="introducción-a-la-econometría-regresión.html#cb247-25" aria-hidden="true" tabindex="-1"></a><span class="co">#score probabilidades</span></span>
+<span id="cb247-26"><a href="introducción-a-la-econometría-regresión.html#cb247-26" aria-hidden="true" tabindex="-1"></a>pres<span class="ot">&lt;-</span><span class="fu">predict</span>(mod1,eh18p,<span class="at">type=</span><span class="st">&quot;response&quot;</span>)</span>
+<span id="cb247-27"><a href="introducción-a-la-econometría-regresión.html#cb247-27" aria-hidden="true" tabindex="-1"></a>lres<span class="ot">&lt;-</span><span class="fu">predict</span>(mod2,eh18p,<span class="at">type=</span><span class="st">&quot;response&quot;</span>)</span>
+<span id="cb247-28"><a href="introducción-a-la-econometría-regresión.html#cb247-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb247-29"><a href="introducción-a-la-econometría-regresión.html#cb247-29" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(mod1,eh18p[<span class="dv">1</span>,<span class="fu">c</span>(<span class="st">&quot;aestudio&quot;</span>,<span class="st">&quot;s02a_02&quot;</span>)],<span class="at">type=</span><span class="st">&quot;response&quot;</span>)</span>
+<span id="cb247-30"><a href="introducción-a-la-econometría-regresión.html#cb247-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb247-31"><a href="introducción-a-la-econometría-regresión.html#cb247-31" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">density</span>(lres,<span class="at">na.rm=</span>T))</span>
+<span id="cb247-32"><a href="introducción-a-la-econometría-regresión.html#cb247-32" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="fu">density</span>(pres,<span class="at">na.rm=</span>T),<span class="at">col=</span><span class="st">&quot;red&quot;</span>,<span class="at">type=</span><span class="st">&quot;l&quot;</span>)</span>
+<span id="cb247-33"><a href="introducción-a-la-econometría-regresión.html#cb247-33" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="fu">density</span>(pres),<span class="at">type =</span> <span class="st">&quot;l&quot;</span>,<span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span>
+<span id="cb247-34"><a href="introducción-a-la-econometría-regresión.html#cb247-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb247-35"><a href="introducción-a-la-econometría-regresión.html#cb247-35" aria-hidden="true" tabindex="-1"></a><span class="co">#efectos marginales</span></span>
+<span id="cb247-36"><a href="introducción-a-la-econometría-regresión.html#cb247-36" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mfx)</span>
+<span id="cb247-37"><a href="introducción-a-la-econometría-regresión.html#cb247-37" aria-hidden="true" tabindex="-1"></a><span class="fu">probitmfx</span>(pobreza<span class="sc">~</span><span class="fu">I</span>(ylab<span class="sc">/</span><span class="dv">1000</span>)<span class="sc">+</span>aestudio<span class="sc">+</span>s02a_02,<span class="at">data=</span>eh18p)</span>
+<span id="cb247-38"><a href="introducción-a-la-econometría-regresión.html#cb247-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb247-39"><a href="introducción-a-la-econometría-regresión.html#cb247-39" aria-hidden="true" tabindex="-1"></a><span class="fu">logitmfx</span>(pobreza<span class="sc">~</span><span class="fu">factor</span>(aestudio)<span class="sc">+</span>s02a_02,<span class="at">data=</span>eh18p)</span>
+<span id="cb247-40"><a href="introducción-a-la-econometría-regresión.html#cb247-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb247-41"><a href="introducción-a-la-econometría-regresión.html#cb247-41" aria-hidden="true" tabindex="-1"></a><span class="co">#comparando</span></span>
+<span id="cb247-42"><a href="introducción-a-la-econometría-regresión.html#cb247-42" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(memisc)</span>
+<span id="cb247-43"><a href="introducción-a-la-econometría-regresión.html#cb247-43" aria-hidden="true" tabindex="-1"></a><span class="fu">mtable</span>(mod1,mod2,mod3,<span class="at">summary.stats=</span><span class="st">&quot;AIC&quot;</span>)</span>
+<span id="cb247-44"><a href="introducción-a-la-econometría-regresión.html#cb247-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb247-45"><a href="introducción-a-la-econometría-regresión.html#cb247-45" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survey)</span>
+<span id="cb247-46"><a href="introducción-a-la-econometría-regresión.html#cb247-46" aria-hidden="true" tabindex="-1"></a>?<span class="fu">svyglm</span>()</span>
+<span id="cb247-47"><a href="introducción-a-la-econometría-regresión.html#cb247-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb247-48"><a href="introducción-a-la-econometría-regresión.html#cb247-48" aria-hidden="true" tabindex="-1"></a><span class="do">#### enfermades crónicas </span></span>
+<span id="cb247-49"><a href="introducción-a-la-econometría-regresión.html#cb247-49" aria-hidden="true" tabindex="-1"></a>aux<span class="ot">&lt;-</span><span class="fu">levels</span>(eh18p<span class="sc">$</span>s04a_01a)</span>
+<span id="cb247-50"><a href="introducción-a-la-econometría-regresión.html#cb247-50" aria-hidden="true" tabindex="-1"></a>eh18p<span class="ot">&lt;-</span>eh18p <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">diabetes=</span>(s04a_01a<span class="sc">==</span>aux[<span class="dv">1</span>] <span class="sc">|</span> s04a_01b<span class="sc">==</span>aux[<span class="dv">1</span>]),<span class="at">corazon=</span>(s04a_01a<span class="sc">==</span>aux[<span class="dv">4</span>] <span class="sc">|</span> s04a_01b<span class="sc">==</span>aux[<span class="dv">4</span>]),<span class="at">hiper=</span>(s04a_01a<span class="sc">==</span>aux[<span class="dv">10</span>] <span class="sc">|</span> s04a_01b<span class="sc">==</span>aux[<span class="dv">10</span>]))</span>
+<span id="cb247-51"><a href="introducción-a-la-econometría-regresión.html#cb247-51" aria-hidden="true" tabindex="-1"></a>eh18p<span class="sc">$</span>diabetes<span class="ot">&lt;-</span>(eh18p<span class="sc">$</span>diabetes<span class="sc">==</span>T); eh18p<span class="sc">$</span>diabetes[<span class="fu">is.na</span>(eh18p<span class="sc">$</span>diabetes)]<span class="ot">&lt;-</span>F</span>
+<span id="cb247-52"><a href="introducción-a-la-econometría-regresión.html#cb247-52" aria-hidden="true" tabindex="-1"></a>eh18p<span class="sc">$</span>corazon<span class="ot">&lt;-</span>(eh18p<span class="sc">$</span>corazon<span class="sc">==</span>T); eh18p<span class="sc">$</span>corazon[<span class="fu">is.na</span>(eh18p<span class="sc">$</span>corazon)]<span class="ot">&lt;-</span>F</span>
+<span id="cb247-53"><a href="introducción-a-la-econometría-regresión.html#cb247-53" aria-hidden="true" tabindex="-1"></a>eh18p<span class="sc">$</span>hiper<span class="ot">&lt;-</span>(eh18p<span class="sc">$</span>hiper<span class="sc">==</span>T); eh18p<span class="sc">$</span>hiper[<span class="fu">is.na</span>(eh18p<span class="sc">$</span>hiper)]<span class="ot">&lt;-</span>F</span>
+<span id="cb247-54"><a href="introducción-a-la-econometría-regresión.html#cb247-54" aria-hidden="true" tabindex="-1"></a>eh18p<span class="sc">$</span>cronicas<span class="ot">&lt;-</span>(eh18p<span class="sc">$</span>diabetes<span class="sc">+</span>eh18p<span class="sc">$</span>corazon<span class="sc">+</span>eh18p<span class="sc">$</span>hiper)</span>
+<span id="cb247-55"><a href="introducción-a-la-econometría-regresión.html#cb247-55" aria-hidden="true" tabindex="-1"></a><span class="co">#modelo para las enfermedades crónicas</span></span>
+<span id="cb247-56"><a href="introducción-a-la-econometría-regresión.html#cb247-56" aria-hidden="true" tabindex="-1"></a>eh18p<span class="sc">$</span>cronicas<span class="ot">&lt;-</span>(eh18p<span class="sc">$</span>cronicas<span class="sc">!=</span><span class="dv">0</span>)</span>
+<span id="cb247-57"><a href="introducción-a-la-econometría-regresión.html#cb247-57" aria-hidden="true" tabindex="-1"></a><span class="co">#probit logit</span></span>
+<span id="cb247-58"><a href="introducción-a-la-econometría-regresión.html#cb247-58" aria-hidden="true" tabindex="-1"></a>logit<span class="ot">&lt;-</span><span class="fu">glm</span>(cronicas<span class="sc">~</span>s02a_02<span class="sc">+</span>s02a_03,<span class="at">data=</span>eh18p,<span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link=</span><span class="st">&quot;logit&quot;</span>))</span>
+<span id="cb247-59"><a href="introducción-a-la-econometría-regresión.html#cb247-59" aria-hidden="true" tabindex="-1"></a>probit<span class="ot">&lt;-</span><span class="fu">glm</span>(cronicas<span class="sc">~</span>s02a_02<span class="sc">+</span>s02a_03,<span class="at">data=</span>eh18p,<span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link=</span><span class="st">&quot;probit&quot;</span>))</span>
+<span id="cb247-60"><a href="introducción-a-la-econometría-regresión.html#cb247-60" aria-hidden="true" tabindex="-1"></a>lineal<span class="ot">&lt;-</span><span class="fu">lm</span>(cronicas<span class="sc">~</span>s02a_02<span class="sc">+</span>s02a_03,<span class="at">data=</span>eh18p)</span>
+<span id="cb247-61"><a href="introducción-a-la-econometría-regresión.html#cb247-61" aria-hidden="true" tabindex="-1"></a><span class="co">#resumen</span></span>
+<span id="cb247-62"><a href="introducción-a-la-econometría-regresión.html#cb247-62" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(logit)</span>
+<span id="cb247-63"><a href="introducción-a-la-econometría-regresión.html#cb247-63" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(probit)</span>
+<span id="cb247-64"><a href="introducción-a-la-econometría-regresión.html#cb247-64" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lineal)</span>
+<span id="cb247-65"><a href="introducción-a-la-econometría-regresión.html#cb247-65" aria-hidden="true" tabindex="-1"></a><span class="co">#score probabilidades</span></span>
+<span id="cb247-66"><a href="introducción-a-la-econometría-regresión.html#cb247-66" aria-hidden="true" tabindex="-1"></a>lres<span class="ot">&lt;-</span><span class="fu">predict</span>(logit,eh18p,<span class="at">type=</span><span class="st">&quot;response&quot;</span>)</span>
+<span id="cb247-67"><a href="introducción-a-la-econometría-regresión.html#cb247-67" aria-hidden="true" tabindex="-1"></a>pres<span class="ot">&lt;-</span><span class="fu">predict</span>(probit,eh18p,<span class="at">type=</span><span class="st">&quot;response&quot;</span>)</span>
+<span id="cb247-68"><a href="introducción-a-la-econometría-regresión.html#cb247-68" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">density</span>(lres))</span>
+<span id="cb247-69"><a href="introducción-a-la-econometría-regresión.html#cb247-69" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="fu">density</span>(pres),<span class="at">type =</span> <span class="st">&quot;l&quot;</span>,<span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span>
+<span id="cb247-70"><a href="introducción-a-la-econometría-regresión.html#cb247-70" aria-hidden="true" tabindex="-1"></a><span class="co">#efectos marginales</span></span>
+<span id="cb247-71"><a href="introducción-a-la-econometría-regresión.html#cb247-71" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mfx)</span>
+<span id="cb247-72"><a href="introducción-a-la-econometría-regresión.html#cb247-72" aria-hidden="true" tabindex="-1"></a><span class="fu">probitmfx</span>(cronicas<span class="sc">~</span>s02a_02<span class="sc">+</span>s02a_03,<span class="at">data=</span>eh18p)</span>
+<span id="cb247-73"><a href="introducción-a-la-econometría-regresión.html#cb247-73" aria-hidden="true" tabindex="-1"></a><span class="fu">logitmfx</span>(cronicas<span class="sc">~</span>s02a_02<span class="sc">+</span>s02a_03,<span class="at">data=</span>eh18p)</span>
+<span id="cb247-74"><a href="introducción-a-la-econometría-regresión.html#cb247-74" aria-hidden="true" tabindex="-1"></a><span class="co">#ajuste</span></span>
+<span id="cb247-75"><a href="introducción-a-la-econometría-regresión.html#cb247-75" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DescTools)</span>
+<span id="cb247-76"><a href="introducción-a-la-econometría-regresión.html#cb247-76" aria-hidden="true" tabindex="-1"></a><span class="fu">PseudoR2</span>(logit)</span>
+<span id="cb247-77"><a href="introducción-a-la-econometría-regresión.html#cb247-77" aria-hidden="true" tabindex="-1"></a><span class="fu">PseudoR2</span>(probit)</span>
+<span id="cb247-78"><a href="introducción-a-la-econometría-regresión.html#cb247-78" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lineal)</span>
+<span id="cb247-79"><a href="introducción-a-la-econometría-regresión.html#cb247-79" aria-hidden="true" tabindex="-1"></a><span class="co">#comparando</span></span>
+<span id="cb247-80"><a href="introducción-a-la-econometría-regresión.html#cb247-80" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(memisc)</span>
+<span id="cb247-81"><a href="introducción-a-la-econometría-regresión.html#cb247-81" aria-hidden="true" tabindex="-1"></a><span class="fu">mtable</span>(logit,probit,lineal)</span></code></pre></div>
+<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="introducción-a-la-econometría-regresión.html#cb248-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">glm</span>(cronicas<span class="sc">~</span>s02a_02<span class="sc">+</span>s02a_03,<span class="at">data=</span>eh18p))</span>
+<span id="cb248-2"><a href="introducción-a-la-econometría-regresión.html#cb248-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(cronicas<span class="sc">~</span>s02a_02<span class="sc">+</span>s02a_03,<span class="at">data=</span>eh18p))</span></code></pre></div>
+
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div class="csl-entry">
+Allaire, JJ, Yihui Xie, Jonathan McPherson, Javier Luraschi, Kevin Ushey, Aron Atkins, Hadley Wickham, Joe Cheng, Winston Chang, and Richard Iannone. 2020. <em>Rmarkdown: Dynamic Documents for r</em>. <a href="https://CRAN.R-project.org/package=rmarkdown">https://CRAN.R-project.org/package=rmarkdown</a>.
+</div>
+<div class="csl-entry">
+R Core Team. 2019. <em>R: A Language and Environment for Statistical Computing</em>. Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org/">https://www.R-project.org/</a>.
+</div>
+<div class="csl-entry">
+Xie, Yihui. 2019. <em>Knitr: A General-Purpose Package for Dynamic Report Generation in r</em>. <a href="https://CRAN.R-project.org/package=knitr">https://CRAN.R-project.org/package=knitr</a>.
+</div>
+<div class="csl-entry">
+———. 2020. <em>Bookdown: Authoring Books and Technical Documents with r Markdown</em>. <a href="https://CRAN.R-project.org/package=bookdown">https://CRAN.R-project.org/package=bookdown</a>.
+</div>
+<div class="csl-entry">
+Xie, Yihui, J. J. Allaire, and Garrett Grolemund. 2018. <span>“<span class="nocase">How to Read This Book</span>.”</span> <em>Transforming Climate Finance and Green Investment with Blockchains</em>, 1. <a href="https://doi.org/10.1016/b978-0-12-814447-3.00041-0">https://doi.org/10.1016/b978-0-12-814447-3.00041-0</a>.
+</div>
+</div>
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="introR.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

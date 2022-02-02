@@ -1,0 +1,325 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+knitr::opts_chunk$set(echo = TRUE,warning = F,message = F,eval = F)
+```
+
+
+# Introducción a la econometría (regresión)
+
+$$y=f(x_1,x_2, \ldots)$$
+
+  * $y$ Variable de resultado, dependiente, solo tenemos a una $y$. 
+  * $x_1, x_2, \ldots$, variables de control, independientes.
+  
+ A partir de estas variables:
+ 
+  * ¿Cuál es la relación de $x$ sobre $y$?
+    + Lineal  
+
+$$y_i=\beta_0+\beta_1 x_{i1}+\beta_2 x_{i2}+\ldots+\epsilon_i$$
+$$E[y_i]=E[\hat{\beta}_0+\hat{\beta}_1 x_{i1}+\hat{\beta}_2 x_{i2}+\ldots]$$
+
+$$\frac{dy}{d x_1}= \beta_1$$
+
+
+> Nota: Diferenciar que la regresión busca establecer relaciones basadas en los datos y no asi un proceso causal.
+
+  + Polinomial
+  + Etc; No lineal,
+    
+  * Conocer la naturaleza de $y$ y las variables $x$
+    + $Y$ es cuanti (real), $X$ mixtas. (Modelos lineales, MCO)
+    + $Y$ es cuanti (discreta >= 0), $X$ cuanti. (Poisson)
+    + $Y$ es cuali nominal binario, $X$ mixtas. (LOGIT/PROBIT)
+    + $Y$ es cuali ordinal, $X$ mixtas. (Logit/probit ordenados)
+
+## Regresión lineal
+
+1. Base datos lista para el modelo (Unidad de investigación)
+2. Establecer la relación interés
+3. Definir el modelo de interés
+4. Optimizar el modelo
+5. Validar el modelo
+6. Predecir a partir del modelo
+
+### Paso 1: Base de datos
+
+### Paso 2: Establecer la relación de interés.
+
+  * $Y$ 
+  * $X$ 
+
+Para definir el vector de covariables $X$, una práctica recomendada es identificar variables desde el unidad de análisis hacia otras unidades agregadas. 
+
+
+### Paso 3: Definir el modelo a utilizar
+
+OLS, MCO. Modelos lineales
+
+```{r,eval=F}
+# regresión lineal simple y=f(x)
+m1_1<-lm()
+```
+
+### Paso 4: Optimizar el modelo
+
+```{r,eval=F}
+#stepwise
+m4_1<-step(m3_1)
+```
+
+### Paso 5: Validar el modelo
+
+```{r,eval=F}
+#Supuestos del modelo
+## los errores se distribuyen normal(media=0,varianza=constante)
+### heterocedasticidad
+## Independencia entre los X del modelo
+### multicolinealidad
+
+model<-m5_2
+
+# los errores se distribuyen normal
+par(mfrow=c(2,2))
+plot(model)
+dev.off()
+#errores
+ee<-residuals(model)
+
+plot(density(ee))
+points(density(rnorm(100000,mean(ee),sd(ee))),type="l",col="red")
+#prueba de normalidad
+#H0 x ~ normal()
+library(normtest)
+library(nortest)
+
+ad.test(ee)
+lillie.test(ee)
+
+
+bd2[6697,]
+bd2[7920,]
+bd2[1280,]
+
+boxplot(bd2$ylab)
+
+#limitar los datos hasta el percentil 
+punto<-c(0.05,0.95)
+
+z<-quantile(bd2$ylab,punto,na.rm=T)
+z
+
+bd2<-bd2 %>% filter((ylab<z[2] & ylab>z[1]))
+
+plot(density(bd2$ylab))
+boxplot(bd2$ylab)
+#definiendo el modelo sin atípicos
+model1<-lm(log(ylab)~ factor(aestudio)+s02a_02+s02a_03+tothrs+area,data=bd2)
+
+summary(model1)
+
+ee1<-residuals(model1)
+plot(density(ee1))
+points(density(rnorm(100000,mean(ee1),sd(ee1))),type="l",col="red")
+
+ad.test(ee1)
+lillie.test(ee1)
+ks.test(ee1,"pnorm",mean(ee1),sd(ee1))#kolmogorov Smirnofv
+
+plot(model1)
+
+# Distancia de Cook
+cooks.distance(model1)
+
+plot(density(cooks.distance(model1)))
+cc<-cooks.distance(model1)
+
+
+bd3<-bd2[cc<quantile(cc,0.90),]
+model3<-lm(log(ylab)~s02a_03+aestudio+s02a_02+area,data=bd3)
+summary(model3)
+plot(model3)
+plot(density(cooks.distance(model3)))
+
+
+ad.test(residuals(model3))
+lillie.test(residuals(model3))
+
+plot(density(residuals(model3)))
+curve(dnorm(x,mean(residuals(model3)),sd(residuals(model3))),add=T,col="red")
+
+#ajustando polinomios
+bd3<-na.omit(bd3)
+model4<-lm(log(ylab)~poly(s02a_03,2)+factor(aestudio)+s02a_02+poly(tothrs,3)+area,data=bd3)
+summary(model4)
+
+ad.test(residuals(model4))
+## interacciones entre variables
+model5<-lm(log(ylab)~poly(s02a_03,2)+factor(aestudio)+s02a_02+area+s02a_02:aestudio+area:aestudio+tothrs+I(tothrs^4),data=bd3)
+summary(model5)
+ad.test(residuals(model5))
+
+#trabajando sobre los valores atípicos desde R
+library(MASS)
+modela<-rlm(ylab~s02a_02+s02a_03+area,data=bd3)
+modelb<-lm(ylab~s02a_02+s02a_03+area,data=bd3)
+summary(modela)
+summary(modelb)
+ad.test(residuals(model))
+# Colinealidad (X1=f(X2)
+library(car)
+vif(model3)
+sqrt(vif(model3))>2 ##Variance Inflation Factors
+# Verificar si la varianza es constante (homocedástico) o no (heterocedástico)
+library(lmtest)
+bptest(model3) # H0: Homocedasticidad
+bptest(model4)
+#https://en.wikipedia.org/wiki/Breusch%E2%80%93Pagan_test
+
+#corrigiendo 
+library(rms)
+model1 = ols(log(ylab)~s02a_02+s02a_03+aestudio+area,data=bd3,x=T,y=T)
+bptest(model1)
+aux<-robcov(model1)
+
+aux
+# H0: Homocedasticidad, implica que los EE de B no son los correctos
+```
+
+
+### Paso 6: Predicir a partir del modelo
+
+$$\hat{y_i}=\hat{\beta_0}+\sum_{i=1}^p \hat{\beta_i} x_i$$
+
+```{r,eval=F}
+test<-bd3
+yest<-predict(model3,test)
+plot(log(bd3$ylab),yest)
+plot(bd3$ylab,exp(yest))
+```
+
+Nota: 
+
+$$y=\beta_0+\beta_1x_1+\beta_2 x_2+\beta_3 x_1x_2 $$
+$$\frac{d y}{dx_1}=\beta_1+\beta_3 x_2$$
+
+## Probit y Logit
+
+Estrategia, llevar valores binarios a valores continuos. Mediante una función de enlace ($F(Y)$).
+
+$$F(Y)=Y'=X \beta +\epsilon$$
+
+Probit:
+
+$$Y=\Phi (X \beta +\epsilon)$$
+$$\phi^{-1}(Y)=X \beta +\epsilon$$
+$$Y'=X \beta +\epsilon$$
+
+El enlace $F(Y)=\Phi^{-1}(Y)$, es conocida como probit.
+
+
+Logit:
+
+$$logit(Y)=log(\frac{Y}{1-Y})=X\beta+\epsilon$$
+
+$$Y=\frac{e^{X\beta+\epsilon}}{1+e^{X\beta+\epsilon}}$$
+
+### En R:
+
+Definir o plantear un modelo de relación $y=f(x)$ donde la variable $y$ sea de tipo binaria $(0,1)$.
+
+$$y_{pobreza}=f(x_1,x_2,\ldots)$$
+
+```{r,eval=F}
+library(dplyr)
+load("C:\\Users\\ALVARO\\Documents\\GitHub\\EST-384\\data\\eh18.Rdata")
+#### Pobreza a nivel de ... (hogares/persona)
+
+#definir a y (0/1)
+eh18p<-eh18p %>% mutate(pobreza=(pext0=="Pobre extremo"))
+table(eh18p$pobreza)
+
+
+mod1<-glm(pobreza~aestudio+s02a_02,data=eh18p,family = binomial(link="probit"))
+mod2<-glm(pobreza~aestudio+s02a_02,data=eh18p,family = binomial(link="logit"))
+
+mod3<-glm(pobreza~aestudio+s02a_02+s02a_03+ylab,data=eh18p,family = binomial(link="logit"))
+
+
+
+
+summary(mod1)
+summary(mod2)
+#ajuste
+library(DescTools)
+PseudoR2(mod1)
+PseudoR2(mod2)
+
+#score probabilidades
+pres<-predict(mod1,eh18p,type="response")
+lres<-predict(mod2,eh18p,type="response")
+
+predict(mod1,eh18p[1,c("aestudio","s02a_02")],type="response")
+
+plot(density(lres,na.rm=T))
+points(density(pres,na.rm=T),col="red",type="l")
+points(density(pres),type = "l",col="red")
+
+#efectos marginales
+library(mfx)
+probitmfx(pobreza~I(ylab/1000)+aestudio+s02a_02,data=eh18p)
+
+logitmfx(pobreza~factor(aestudio)+s02a_02,data=eh18p)
+
+#comparando
+library(memisc)
+mtable(mod1,mod2,mod3,summary.stats="AIC")
+
+library(survey)
+?svyglm()
+
+#### enfermades crónicas 
+aux<-levels(eh18p$s04a_01a)
+eh18p<-eh18p %>% mutate(diabetes=(s04a_01a==aux[1] | s04a_01b==aux[1]),corazon=(s04a_01a==aux[4] | s04a_01b==aux[4]),hiper=(s04a_01a==aux[10] | s04a_01b==aux[10]))
+eh18p$diabetes<-(eh18p$diabetes==T); eh18p$diabetes[is.na(eh18p$diabetes)]<-F
+eh18p$corazon<-(eh18p$corazon==T); eh18p$corazon[is.na(eh18p$corazon)]<-F
+eh18p$hiper<-(eh18p$hiper==T); eh18p$hiper[is.na(eh18p$hiper)]<-F
+eh18p$cronicas<-(eh18p$diabetes+eh18p$corazon+eh18p$hiper)
+#modelo para las enfermedades crónicas
+eh18p$cronicas<-(eh18p$cronicas!=0)
+#probit logit
+logit<-glm(cronicas~s02a_02+s02a_03,data=eh18p,family = binomial(link="logit"))
+probit<-glm(cronicas~s02a_02+s02a_03,data=eh18p,family = binomial(link="probit"))
+lineal<-lm(cronicas~s02a_02+s02a_03,data=eh18p)
+#resumen
+summary(logit)
+summary(probit)
+summary(lineal)
+#score probabilidades
+lres<-predict(logit,eh18p,type="response")
+pres<-predict(probit,eh18p,type="response")
+plot(density(lres))
+points(density(pres),type = "l",col="red")
+#efectos marginales
+library(mfx)
+probitmfx(cronicas~s02a_02+s02a_03,data=eh18p)
+logitmfx(cronicas~s02a_02+s02a_03,data=eh18p)
+#ajuste
+library(DescTools)
+PseudoR2(logit)
+PseudoR2(probit)
+summary(lineal)
+#comparando
+library(memisc)
+mtable(logit,probit,lineal)
+```
+
+```{r,eval=F}
+summary(glm(cronicas~s02a_02+s02a_03,data=eh18p))
+summary(lm(cronicas~s02a_02+s02a_03,data=eh18p))
+```

@@ -1,0 +1,11 @@
+h1:introducción-a-la-econometría-regresión Introducción a la econometría (regresión)
+h2:regresión-lineal Regresión lineal
+h3:paso-1-base-de-datos Paso 1: Base de datos
+h3:paso-2-establecer-la-relación-de-interés. Paso 2: Establecer la relación de interés.
+h3:paso-3-definir-el-modelo-a-utilizar Paso 3: Definir el modelo a utilizar
+h3:paso-4-optimizar-el-modelo Paso 4: Optimizar el modelo
+h3:paso-5-validar-el-modelo Paso 5: Validar el modelo
+h3:paso-6-predicir-a-partir-del-modelo Paso 6: Predicir a partir del modelo
+h2:probit-y-logit Probit y Logit
+h3:en-r En R:
+
