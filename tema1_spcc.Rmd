@@ -31,6 +31,14 @@ $$T \rightarrow Y $$
 
 # Tipos de variables
 
+## Principales
+
+## Control
+
+## Disturbio
+
+## Aleatorias
+
 # Métodos
 
 ## Experimental
