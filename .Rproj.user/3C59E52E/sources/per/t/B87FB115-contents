@@ -1,0 +1,33 @@
+---
+title: "Pruebas de conocimientos"
+subtitle: "Fundación Aru"
+author: "Alvaro Chirino Gutierrez"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Prueba de conocimientos teóricos estadísticos
+
+La prueba se encuentra en el enlace https://forms.gle/oPhBoNv31Akomcms5 
+  
+# Prueba de conocimientos aplicados en R
+
+Usando la información de https://www.contrataciones.gov.py/dncp/estadistica.html#ranking 
+
+  * Prepare un documento en rmarkdown 
+  * Seleccione una moneda y año
+  * Replique al menos 2 de los siguientes resultados en  una tabla y un gráfico
+    + Monto adjudicado por entidad
+    + Cantidad de licitaciones adjudicadas 
+    + Monto adjudicado por categoría
+    + Cantidad de adjudicaciones por categoría
+    
+Enviar el documento .rmd al correo achirino@aru.org.bo
+
+# Fechas de entrega
+
+  + El plazo de entrega es el 5 de febrero hasta las 23:59
+  + Recuerde enviar el Proyecto de análisis de datos hasta el 10 de febrero
