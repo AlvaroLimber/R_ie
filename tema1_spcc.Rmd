@@ -1,0 +1,38 @@
+---
+title: "Diseñó y técnicas de Evaluación de Impacto"
+author: "Fundación Aru"
+date: '2022-03-14'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# ¿Qué es una evaluación de impacto?
+
+## Pregunta de investigación
+
+## Relación causal
+
+## Experimento natural y programas sociales
+
+## Programa implementado vs programa piloto
+
+## Diseño de una encuesta
+
+# El problema fundamental
+
+# Tipos de variables
+
+# Métodos
+
+## Experimental
+
+## Emparejamiento
+
+## Regresión discontinua
+
+## Diferencia en diferencia
+
+# Diseño SPCC
