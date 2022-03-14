@@ -2,7 +2,11 @@
 title: "Diseñó y técnicas de Evaluación de Impacto"
 author: "Fundación Aru"
 date: '2022-03-14'
-output: html_document
+output:
+  rmdformats::downcute:
+    self_contained: true
+    default_style: "light"
+    downcute_theme: "default"
 ---
 
 ```{r setup, include=FALSE}
@@ -10,6 +14,10 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 # ¿Qué es una evaluación de impacto?
+
+> La evaluación de impacto es un instrumento que contribuye a la toma de decisiones y a la rendición de cuentas, es decir, aporta información tanto para actores a nivel gerencial, como para los ciudadanos sobre la efectividad de los programas a los cuales se destina un presupuesto público (CONEVAL)
+
+> Las evaluaciones de impacto son un tipo particular de evaluación que intenta responder a preguntas sobre causa y efecto. A diferencia de las evaluaciones generales, que pueden responder a muchos tipos de preguntas, las evaluaciones de impacto se preocupan por saber cuál es el impacto (o efecto causal) de un programa sobre un resultado de interés. (BID)
 
 ## Pregunta de investigación
 
@@ -21,24 +29,47 @@ knitr::opts_chunk$set(echo = TRUE)
 
 $$T \rightarrow Y $$
 
-## Experimento natural y programas sociales
+## Tipos de tratamiento
 
-## Programa implementado vs programa piloto
+  - Naturales
+  - Programas sociales (Mecanismo de selección)
 
-## Diseño de una encuesta
+## Fuentes de información y diseño estadístico
+
+  + Fuentes secundarias
+    - Registros administrativos
+    - Censos
+    - Encuestas 
+  + Fuentes primarias
+    - Experimento 
+    - Encuesta
+    - Estudio observacional
+
+## Programa implementado vs programa piloto 
+
+  - Programa implementado
+  - Programa piloto
 
 # El problema fundamental
+
+$$impacto_i=Y_i(T=1)-Y_i(T=0)$$
 
 # Tipos de variables
 
 ## Principales
 
+$$T,Y; \quad T\rightarrow Y$$
 ## Control
+
+$$T,Y,C; \quad T\rightarrow Y \leftarrow C$$
 
 ## Disturbio
 
+$$T,Y,C,D; \quad T\rightarrow Y \leftarrow C; \quad D \rightarrow Y$$
+
 ## Aleatorias
 
+$$T,Y,C,D,A; \quad T\rightarrow Y \leftarrow C; \quad D \rightarrow Y; \quad A \bot Y$$
 # Métodos
 
 ## Experimental
